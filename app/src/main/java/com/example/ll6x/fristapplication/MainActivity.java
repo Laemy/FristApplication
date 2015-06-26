@@ -21,15 +21,15 @@ import android.os.Handler;
 
 
 public class MainActivity extends ActionBarActivity {
-    private Button mButtonShow, send, login, mbtnFood,mbtnGo2;
-    private CheckBox mA, mB, mC, mD,chklndeterminatep;
+    private Button mButtonShow, send, login, mbtnFood, mbtnGo2;
+    private CheckBox mA, mB, mC, mD, mchklndeterminatep;
     private EditText mUsername, mPassword;
     private TextView msg;
     private Spinner mSpnFood;
     private String msFood; //用來存放取得選取Spinner項目內容
     private ProgressBar _CurrentProgressBar;
-    private int mProgressStatus=0;
-    private Handler mHandler= new Handler();
+    private int mProgressStatus = 0;
+    private Handler mHandler = new Handler();
 
 
     @Override
@@ -62,8 +62,8 @@ public class MainActivity extends ActionBarActivity {
         this.findViewById(R.id.progressBar).setVisibility(View.INVISIBLE);
         this.findViewById(R.id.progressBar2).setVisibility(View.INVISIBLE);
 
-        chklndeterminatep = (CheckBox)this.findViewById(R.id.cBAA);
-        _CurrentProgressBar = (ProgressBar)this.findViewById(R.id.progressBar);
+        mchklndeterminatep = (CheckBox) this.findViewById(R.id.cBAA);
+        _CurrentProgressBar = (ProgressBar) this.findViewById(R.id.progressBar);
 
         mbtnGo2 = (Button) findViewById(R.id.btnGo2);
         mbtnGo2.setOnClickListener(new View.OnClickListener() {
@@ -212,28 +212,27 @@ public class MainActivity extends ActionBarActivity {
 
     //Loading Bar
     public void btnGO_loading(View view) {
-mProgressStatus=0;
-        if(chklndeterminatep.isChecked()){
-            _CurrentProgressBar=(ProgressBar)this.findViewById(R.id.progressBar2);
+        mProgressStatus = 0;
+        if (mchklndeterminatep.isChecked()) {
+            _CurrentProgressBar = (ProgressBar) this.findViewById(R.id.progressBar2);
             this.findViewById(R.id.progressBar).setVisibility(View.INVISIBLE);
             _CurrentProgressBar.setIndeterminate(true);
-        }
-        else{
-            _CurrentProgressBar=(ProgressBar)this.findViewById(R.id.progressBar);
+        } else {
+            _CurrentProgressBar = (ProgressBar) this.findViewById(R.id.progressBar);
             this.findViewById(R.id.progressBar2).setVisibility(View.INVISIBLE);
             _CurrentProgressBar.setIndeterminate(false);
         }
         _CurrentProgressBar.setVisibility(View.VISIBLE);
         //Start lengthy operation in a background thread
 
-        Thread t1 = new Thread(new Runnable(){
-            public void run(){
-                while (mProgressStatus<100){
+        Thread t1 = new Thread(new Runnable() {
+            public void run() {
+                while (mProgressStatus < 100) {
                     mProgressStatus++;
-                    try{
+                    try {
                         Thread.sleep(100);
 
-                    }catch (InterruptedException e){
+                    } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                     //Update the progress bar
