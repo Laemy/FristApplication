@@ -4,4 +4,12 @@
     tools:context="com.example.ll6x.fristapplication.MainActivity2Activity">
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/goIndex"
+        android:title="@string/menu_index"
+        app:showAsAction="ifRoom"
+       ></item>
+    <item android:id="@+id/menuExit"
+        android:title="@string/menu_close"
+        app:showAsAction="ifRoom"
+        android:icon="@android:drawable/ic_menu_close_clear_cancel"></item>
 </menu>

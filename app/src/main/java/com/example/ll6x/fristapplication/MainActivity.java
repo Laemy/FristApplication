@@ -21,7 +21,7 @@ import android.os.Handler;
 
 
 public class MainActivity extends ActionBarActivity {
-    private Button mButtonShow, send, login, mbtnFood, mbtnGo2;
+    private Button mButtonShow, send, login, mbtnFood, mbtnGo2,mbtnGo3;
     private CheckBox mA, mB, mC, mD, mchklndeterminatep;
     private EditText mUsername, mPassword;
     private TextView msg;
@@ -73,9 +73,16 @@ public class MainActivity extends ActionBarActivity {
                 startActivity(main2Intent);
             }
         });
-
+        mbtnGo3 = (Button) findViewById(R.id.btnGo3);
+        mbtnGo3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent main3Intent = new Intent(view.getContext(), MainActivity3Activity.class);
+                startActivity(main3Intent);
+            }
+        });
     }
-
+    //Login
     private View.OnClickListener btnHOWoNcLICK = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -158,6 +165,9 @@ public class MainActivity extends ActionBarActivity {
         }
     };
 
+
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -165,6 +175,8 @@ public class MainActivity extends ActionBarActivity {
         return true;
     }
 
+
+    //menu bar
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -174,7 +186,7 @@ public class MainActivity extends ActionBarActivity {
 
         switch (id) {
             case R.id.menuAbout:
-                ShowAlertDialog("", "");
+                ShowAlertDialog("About", "Information");
                 break;
             case R.id.menuSearch:
                 ShowAlertDialog("Search!", "Search Box");

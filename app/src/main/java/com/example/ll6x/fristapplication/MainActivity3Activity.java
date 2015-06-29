@@ -3,79 +3,38 @@ package com.example.ll6x.fristapplication;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.Toast;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.EditText;
 
 
-public class MainActivity2Activity extends ActionBarActivity {
-ListView listView;
+public class MainActivity3Activity extends ActionBarActivity {
+    private EditText urlEditText;
+    private WebView webview;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_activity2);
+        setContentView(R.layout.activity_main_activity3);
 
-        //Get ListView object from xml
-        listView = (ListView) findViewById(R.id.list_food);
+        urlEditText = (EditText) this.findViewById(R.id.website);
+        webview = (WebView) this.findViewById(R.id.webView);
+        WebSettings wvSetting = webview.getSettings();
+        wvSetting.setBuiltInZoomControls(true);
+        wvSetting.setDisplayZoomControls(true);
+        webview.setWebViewClient(new WebClient());
+        webview.setWebChromeClient(new WebChromeClient());
 
-        //Define Array values to show in ListView
-        String[] FoodMenu = new String[]{
-                "Apple",
-                "Banana",
-                "Cake",
-                "Black Tea",
-                "EGG",
-                "Candy"
-        };
-
-        Integer[] imageId={
-                R.drawable.a01,
-                R.drawable.a02,
-                R.drawable.a03,
-                R.drawable.a04,
-                R.drawable.a05,
-                R.drawable.a06
-        };
-CustomList adapter = new CustomList(MainActivity2Activity.this,FoodMenu,imageId);
-
-        // Define a new Adepter
-        // First parameter - Context
-        //Second parameter - Layout for the now
-        //Third parameter - ID of the TextView to which the data is written
-        //Forth - the Array to data
-        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, android.R.id.text1, FoodMenu);
-
-        //Assign adapter to ListView
-        listView.setAdapter(adapter);
-
-        //ListView Item Click Listener
-        listView.setOnItemClickListener(foodOnItemClick);
 
     }
-
-    private AdapterView.OnItemClickListener foodOnItemClick=new AdapterView.OnItemClickListener() {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-            //ListView Clicked item index
-            int itemPosition = position;
-
-            //ListView Clicked item value
-            String itemValue = (String) listView.getItemAtPosition(position);
-
-            //Show Alert
-            String msg = "Position:" + (itemPosition + 1) + " ListItem:" + itemValue;
-            Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG)
-                    .show();
-
-        }
-
-    };
 
 
     @Override
@@ -91,16 +50,14 @@ CustomList adapter = new CustomList(MainActivity2Activity.this,FoodMenu,imageId)
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
         switch (id) {
             case R.id.goIndex:
-                //ShowAlertDialog("Search!", "Search Box");
                 Intent mainIntent = new Intent(this, MainActivity.class);
                 startActivity(mainIntent);
-                MainActivity2Activity.this.finish(); //結束目前Activity
+                MainActivity3Activity.this.finish(); //結束目前Activity
                 break;
             case R.id.menuExit:
-                new AlertDialog.Builder(MainActivity2Activity.this)
+                new AlertDialog.Builder(MainActivity3Activity.this)
                         .setTitle("Close Program")
                         .setMessage("Are you sure to close the program?")
                         .setCancelable(false)
@@ -134,5 +91,29 @@ CustomList adapter = new CustomList(MainActivity2Activity.this,FoodMenu,imageId)
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void btnWebGo_Click(View view) {
+        String url = urlEditText.getText().toString();
+        if (url != null) {
+            if (url.startsWith("http://") == false || url.startsWith("https://") == false) {
+                StringBuilder sb = new StringBuilder(url);
+                sb.insert(0, "http://");
+                url = sb.toString();
+
+            }
+            webview.loadUrl(url);
+        }
+
+    }
+
+    private class  WebClient extends WebViewClient{
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view,String url){
+            //TODO Auto-generated method stub
+            view.loadUrl(Uri.parse(url).toString());
+            return  true;
+        }
+
     }
 }

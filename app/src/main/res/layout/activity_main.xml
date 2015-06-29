@@ -49,11 +49,12 @@
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="AAA"
+        android:text="AAA(load)"
         android:id="@+id/cBAA"
         android:layout_below="@+id/button"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:checked="false" />
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -82,11 +83,11 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="CB"
+        android:text="Check Box"
         android:id="@+id/send"
-        android:layout_alignBottom="@+id/cBDD"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignBottom="@+id/rGroup"
+        android:layout_toRightOf="@+id/btnload"
+        android:layout_toEndOf="@+id/btnload" />
 
 
     <EditText
@@ -126,7 +127,14 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:textColor="#ffff1123"/>
-
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Admin/12345"
+        android:id="@+id/AccountAndPwd"
+        android:layout_below="@+id/mPassword"
+        android:layout_alignLeft="@+id/mPassword"
+        android:layout_alignStart="@+id/mPassword" />
     <Spinner
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -185,4 +193,14 @@
         android:layout_below="@+id/progressBar"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Page 3"
+        android:id="@+id/btnGo3"
+        android:layout_alignBottom="@+id/btnGo2"
+        android:layout_toRightOf="@+id/btnGo2"
+        android:layout_toEndOf="@+id/btnGo2" />
 </RelativeLayout>
