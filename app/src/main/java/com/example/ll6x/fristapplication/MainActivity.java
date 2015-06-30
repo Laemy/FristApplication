@@ -5,25 +5,29 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-
-import android.os.Handler;
 import android.widget.Toast;
 
 
 public class MainActivity extends ActionBarActivity {
-    private Button mButtonShow, send, login, mbtnFood, mbtnGo2,mbtnGo3,mbtnGo4;
+    private Button mButtonShow, send, login, mbtnFood, mbtnGo2, mbtnGo3, mbtnGo4;
     private CheckBox mA, mB, mC, mD, mchklndeterminatep;
     private EditText mUsername, mPassword;
     private TextView msg;
@@ -34,7 +38,16 @@ public class MainActivity extends ActionBarActivity {
     private Handler mHandler = new Handler();
     private ProgressDialog progress;
     private AsyncClass ac;
-
+    private static final int MENU_EDIT = Menu.FIRST,
+            MENU_CUT = Menu.FIRST + 1,
+            MENU_COPY = Menu.FIRST + 2,
+            MENU_PASTE = Menu.FIRST + 3,
+            MENU_ABOUT = Menu.FIRST + 4,
+            MENU_EXIT = Menu.FIRST + 5;
+    private RelativeLayout mRelativeLayout;
+    private TextView mTxtView;
+    private AutoCompleteTextView mAutoCompTextView;
+    private ArrayAdapter<String> mAdapAutoCompText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,7 +107,21 @@ public class MainActivity extends ActionBarActivity {
                 startActivity(main4Intent);
             }
         });
+
+        //長按畫面出現選單
+        mRelativeLayout = (RelativeLayout) findViewById(R.id.relativeLayout);
+        registerForContextMenu(mRelativeLayout);
+        mTxtView = (TextView) findViewById(R.id.textView);
+        registerForContextMenu(mTxtView);
+
+        //5.17 Android with AutoCompleteTextView 自動顯示提示
+        mAutoCompTextView = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView);
+        String[] sArrCandidateString = new String[]{"And","Andy","Android","Andrew"};
+        mAdapAutoCompText=new ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line,sArrCandidateString);
+        mAutoCompTextView.setAdapter(mAdapAutoCompText);
+
     }
+
     //Login
     private View.OnClickListener btnHOWoNcLICK = new View.OnClickListener() {
         @Override
@@ -178,9 +205,6 @@ public class MainActivity extends ActionBarActivity {
         }
     };
 
-
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -188,6 +212,15 @@ public class MainActivity extends ActionBarActivity {
         return true;
     }
 
+
+    //長按畫面出現選單
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        // TODO Auto-generated method stub
+        onOptionsItemSelected(item);
+
+        return super.onContextItemSelected(item);
+    }
 
     //menu bar
     @Override
@@ -226,11 +259,27 @@ public class MainActivity extends ActionBarActivity {
                                     }
                                 })
                         .show();
-
                 break;
-
+            //長按畫面出現選單
+            case MENU_EDIT:
+                Toast.makeText(MainActivity.this, "Edit!!", Toast.LENGTH_SHORT).show();
+                break;
+            case MENU_CUT:
+                Toast.makeText(MainActivity.this, "CUT!!", Toast.LENGTH_SHORT).show();
+                break;
+            case MENU_COPY:
+                Toast.makeText(MainActivity.this, "COPY!!", Toast.LENGTH_SHORT).show();
+                break;
+            case MENU_PASTE:
+                Toast.makeText(MainActivity.this, "PASTE!!", Toast.LENGTH_SHORT).show();
+                break;
+            case MENU_ABOUT:
+                Toast.makeText(MainActivity.this, "關於這個Content Menu程式!!", Toast.LENGTH_SHORT).show();
+                break;
+            case MENU_EXIT:
+                finish();
+                break;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -269,32 +318,65 @@ public class MainActivity extends ActionBarActivity {
                     });
                 }
             }
-
         });
         t1.start();
-
     }
 
+    //Downloading ％數條
     public void btnload2_Click(View view) {
-        progress =new ProgressDialog(this);
+        progress = new ProgressDialog(this);
         progress.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         progress.setTitle("Please wait");
         progress.setMessage("Downloading...");
 
         //setting the OK Button
-        progress.setButton(DialogInterface.BUTTON_POSITIVE,"OK",new DialogInterface.OnClickListener(){
-            public void onClick(DialogInterface dialog, int whichButton){
-                Toast.makeText(getBaseContext(),"OK clicked!", Toast.LENGTH_SHORT).show();
+        progress.setButton(DialogInterface.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                Toast.makeText(getBaseContext(), "OK clicked!", Toast.LENGTH_SHORT).show();
             }
         });
 
         //set the Cancel button
-        progress.setButton(DialogInterface.BUTTON_POSITIVE,"Cancel",new DialogInterface.OnClickListener(){
-            public void onClick(DialogInterface dialog,int whichButton) {
-                Toast.makeText(getApplicationContext(),"Cancel clicked", Toast.LENGTH_SHORT).show();
+        progress.setButton(DialogInterface.BUTTON_POSITIVE, "Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                Toast.makeText(getApplicationContext(), "Cancel clicked", Toast.LENGTH_SHORT).show();
             }
         });
         ac = new AsyncClass(progress);
         ac.execute();
+    }
+
+    //長按畫面出現選單
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        //TODO Auto-generated method stub
+        super.onCreateContextMenu(menu, v, menuInfo);
+
+        if (v == mRelativeLayout) {
+            if (menu.size() == 0) {
+                SubMenu subMenu = menu.addSubMenu(0, MENU_EDIT, 0, "編輯");
+                subMenu.add(0, MENU_CUT, 0, "剪下");
+                subMenu.add(0, MENU_COPY, 1, "複製");
+                subMenu.add(0, MENU_PASTE, 2, "貼上");
+                menu.add(0, MENU_ABOUT, 1, "關於這個程式...");
+                menu.add(0, MENU_EXIT, 2, "結束");
+            }
+        } else if (v == mTxtView) {
+            menu.add(0, MENU_ABOUT, 1, "關於這個程式...");
+        }
+
+    }
+
+    //5.17 Android with AutoCompleteTextView 自動顯示提示
+    public void btnAdd_Click(View view) {
+        String str=mAutoCompTextView.getText().toString();
+        mAdapAutoCompText.add(str);
+        Toast.makeText(MainActivity.this,"["+str+"]加入完畢",Toast.LENGTH_SHORT).show();
+        mAutoCompTextView.setText("");
+    }
+    //5.17 Android with AutoCompleteTextView 自動顯示提示
+    public void btnClear_Click(View view) {
+        mAdapAutoCompText.clear();
+        Toast.makeText(MainActivity.this,"自動完成文字清除完畢",Toast.LENGTH_SHORT).show();
     }
 }

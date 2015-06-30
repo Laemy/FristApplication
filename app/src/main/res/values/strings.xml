@@ -10,6 +10,7 @@
     <string name="menu_close">Close</string>
     <string name="menu_search">Search</string>
     <string name="menu_index">Home</string>
+    <string name="screen_note">請於畫面長按一秒</string>
 
     <string-array name="food_list">
         <item>EGG</item>
