@@ -1,6 +1,7 @@
 package com.example.ll6x.fristapplication;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,10 +19,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import android.os.Handler;
+import android.widget.Toast;
 
 
 public class MainActivity extends ActionBarActivity {
-    private Button mButtonShow, send, login, mbtnFood, mbtnGo2,mbtnGo3;
+    private Button mButtonShow, send, login, mbtnFood, mbtnGo2,mbtnGo3,mbtnGo4;
     private CheckBox mA, mB, mC, mD, mchklndeterminatep;
     private EditText mUsername, mPassword;
     private TextView msg;
@@ -30,6 +32,8 @@ public class MainActivity extends ActionBarActivity {
     private ProgressBar _CurrentProgressBar;
     private int mProgressStatus = 0;
     private Handler mHandler = new Handler();
+    private ProgressDialog progress;
+    private AsyncClass ac;
 
 
     @Override
@@ -79,6 +83,15 @@ public class MainActivity extends ActionBarActivity {
             public void onClick(View view) {
                 Intent main3Intent = new Intent(view.getContext(), MainActivity3Activity.class);
                 startActivity(main3Intent);
+            }
+        });
+
+        mbtnGo4 = (Button) findViewById(R.id.btnGo4);
+        mbtnGo4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent main4Intent = new Intent(view.getContext(), MainActivity4Activity.class);
+                startActivity(main4Intent);
             }
         });
     }
@@ -260,5 +273,28 @@ public class MainActivity extends ActionBarActivity {
         });
         t1.start();
 
+    }
+
+    public void btnload2_Click(View view) {
+        progress =new ProgressDialog(this);
+        progress.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        progress.setTitle("Please wait");
+        progress.setMessage("Downloading...");
+
+        //setting the OK Button
+        progress.setButton(DialogInterface.BUTTON_POSITIVE,"OK",new DialogInterface.OnClickListener(){
+            public void onClick(DialogInterface dialog, int whichButton){
+                Toast.makeText(getBaseContext(),"OK clicked!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        //set the Cancel button
+        progress.setButton(DialogInterface.BUTTON_POSITIVE,"Cancel",new DialogInterface.OnClickListener(){
+            public void onClick(DialogInterface dialog,int whichButton) {
+                Toast.makeText(getApplicationContext(),"Cancel clicked", Toast.LENGTH_SHORT).show();
+            }
+        });
+        ac = new AsyncClass(progress);
+        ac.execute();
     }
 }

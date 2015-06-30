@@ -86,8 +86,8 @@
         android:text="Check Box"
         android:id="@+id/send"
         android:layout_alignBottom="@+id/rGroup"
-        android:layout_toRightOf="@+id/btnload"
-        android:layout_toEndOf="@+id/btnload" />
+        android:layout_toRightOf="@+id/btnload2"
+        android:layout_toEndOf="@+id/btnload2" />
 
 
     <EditText
@@ -190,7 +190,7 @@
         android:layout_height="wrap_content"
         android:text="Page 2"
         android:id="@+id/btnGo2"
-        android:layout_below="@+id/progressBar"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -203,4 +203,25 @@
         android:layout_alignBottom="@+id/btnGo2"
         android:layout_toRightOf="@+id/btnGo2"
         android:layout_toEndOf="@+id/btnGo2" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Page 4"
+        android:id="@+id/btnGo4"
+        android:layout_alignTop="@+id/btnGo3"
+        android:layout_toRightOf="@+id/btnGo3"
+        android:layout_toEndOf="@+id/btnGo3" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Load2"
+        android:id="@+id/btnload2"
+        android:onClick="btnload2_Click"
+        android:layout_alignTop="@+id/btnload"
+        android:layout_toRightOf="@+id/btnload"
+        android:layout_toEndOf="@+id/btnload" />
 </RelativeLayout>
